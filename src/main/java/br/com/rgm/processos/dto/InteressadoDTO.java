@@ -10,6 +10,7 @@ import lombok.Setter;
 public class InteressadoDTO {
 
 	@Getter
+	@Setter
 	private Integer id;
 
 	@Getter
@@ -23,9 +24,5 @@ public class InteressadoDTO {
 	@Getter
 	@Setter
 	private Date dtNascimento;
-
-	@Getter
-	@Setter
-	private Character flAtivo;
 
 }
