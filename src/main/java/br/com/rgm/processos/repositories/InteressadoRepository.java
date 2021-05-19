@@ -8,6 +8,6 @@ import br.com.rgm.processos.entities.Interessado;
 @Repository
 public interface InteressadoRepository extends JpaRepository<Interessado,Integer> {
 	
-	public Interessado findBynuIdentificacao(Integer nuIdentificacao);
+	public Interessado findBynuIdentificacao(String nuIdentificacao);
 
 }
