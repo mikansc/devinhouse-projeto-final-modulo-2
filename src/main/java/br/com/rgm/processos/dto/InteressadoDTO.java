@@ -7,22 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class InteressadoDTO {
 
-	@Getter
-	@Setter
 	private Integer id;
-
-	@Getter
-	@Setter
 	private String nmInteressado;
-
-	@Getter
-	@Setter
 	private String nuIdentificacao;
-
-	@Getter
-	@Setter
 	private Date dtNascimento;
-
 }

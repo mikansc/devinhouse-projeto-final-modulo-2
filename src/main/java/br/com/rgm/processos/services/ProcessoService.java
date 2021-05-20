@@ -59,6 +59,24 @@ public class ProcessoService {
         return toDTO(result);
     }
 
+    public Processo buscarPorId(Integer id) {
+    	return processoRepository.findById(id).get();
+    }
+
+    public Processo buscarPorChaveProcesso(String chaveProcesso) {
+    	return processoRepository.findByChaveProcesso(chaveProcesso);
+    }
+
+    public void apagarProcessoPorId(Integer id) {
+    	processoRepository.deleteById(id);
+    }
+
+    public void atualizarPorId(Integer id, Processo novoProcesso) {
+    	if(processoRepository.existsById(id)) {
+    		processoRepository.save(novoProcesso);    		
+    	}
+    }
+    
     private ProcessoDTO toDTO(Processo processo) {
         return modelMapper.map(processo, ProcessoDTO.class);
     }
@@ -66,4 +84,7 @@ public class ProcessoService {
     private Processo toProcesso(ProcessoDTO processoDTO) {
         return modelMapper.map(processoDTO, Processo.class);
     }
+
+
+
 }

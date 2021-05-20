@@ -3,6 +3,7 @@ package br.com.rgm.processos.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ public class InteressadoController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PostMapping(consumes="application/json")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InteressadoDTO> cadastrarInteressado(@RequestBody InteressadoDTO interessadoDTO) {
 		Interessado interessado = toInteressado(interessadoDTO);
 		InteressadoDTO responseBody = toDTO(interessadoService.cadastrarInteressado(interessado));
@@ -34,14 +35,14 @@ public class InteressadoController {
 		
 	}
 	
-	@GetMapping(path="/{id}", produces="application/json")
+	@GetMapping(path="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<InteressadoDTO> buscarInteressado(@PathVariable Integer id) {
 		Interessado interessado = interessadoService.buscarInteressado(id);
 		return ResponseEntity.ok(toDTO(interessado));
 	}
 	
-	@GetMapping(produces="application/json")
-	public ResponseEntity<InteressadoDTO> buscarInteressadoComNumeroIndentificação(@RequestParam String indentificacao) {
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<InteressadoDTO> buscarInteressadoComNumeroIndentificação(@RequestParam(name="numero_indentificacao") String indentificacao) {
 		Interessado interessado = interessadoService.buscarInteressado(indentificacao);
 		return ResponseEntity.ok(toDTO(interessado));
 	}
