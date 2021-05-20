@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/v1/processo")
+@RequestMapping(path = "/v1/processo", headers="api-version=v1")
 public class ProcessoController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class ProcessoController {
     	return ResponseEntity.ok(toDTO(processo));
     }
     
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/chave",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProcessoDTO> buscarPorChaveProcesso(@RequestParam(name= "chave_processo") String chaveProcesso) {
     	Processo processo = processoService.buscarPorChaveProcesso(chaveProcesso);
     	return ResponseEntity.ok(toDTO(processo));

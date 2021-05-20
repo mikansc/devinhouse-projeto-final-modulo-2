@@ -72,9 +72,9 @@ public class ProcessoService {
     }
 
     public void atualizarPorId(Integer id, Processo novoProcesso) {
-    	if(processoRepository.existsById(id)) {
-    		processoRepository.save(novoProcesso);    		
-    	}
+//    	if(processoRepository.existsById(id)) {
+//    		processoRepository.save(novoProcesso);    		
+//    	}
     }
     
     private ProcessoDTO toDTO(Processo processo) {
