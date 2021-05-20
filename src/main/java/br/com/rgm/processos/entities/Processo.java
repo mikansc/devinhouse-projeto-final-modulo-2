@@ -15,7 +15,7 @@ public class Processo {
     @Getter
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Getter
     @Setter
     private Integer nuProcesso;
@@ -30,7 +30,7 @@ public class Processo {
     @Setter
     private String nuAno;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = true, length = 50)
     @Getter
     @Setter
     private String chaveProcesso;

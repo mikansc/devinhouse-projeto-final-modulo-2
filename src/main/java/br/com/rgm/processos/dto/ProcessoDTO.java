@@ -2,40 +2,28 @@ package br.com.rgm.processos.dto;
 
 import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.entities.Interessado;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProcessoDTO {
-	@Getter
-	private Integer id;
 
-	@Getter
-	@Setter
-	private Integer nuProcesso;
+    private Integer id;
+    private Integer nuProcesso;
+    private String sgOrgaoSetor;
+    private String nuAno;
+    private String chaveProcesso;
+    private String descricao;
 
-	@Getter
-	@Setter
-	private String sgOrgaoSetor;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer cdAssunto;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer cdInteressado;
 
-	@Getter
-	@Setter
-	private String nuAno;
-
-	@Getter
-	@Setter
-	private String chaveProcesso;
-
-	@Getter
-	@Setter
-	private String descricao;
-
-	@Getter
-	@Setter
-	private Assunto assunto;
-
-	@Getter
-	@Setter
-	private Interessado interessado;
+    private Assunto assunto;
+    private Interessado interessado;
 }
