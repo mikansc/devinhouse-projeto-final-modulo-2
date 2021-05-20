@@ -1,17 +1,14 @@
 package br.com.rgm.processos.controllers;
 
-import br.com.rgm.processos.dto.AssuntoDTO;
 import br.com.rgm.processos.dto.ProcessoDTO;
-import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.entities.Processo;
 import br.com.rgm.processos.services.ProcessoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +23,9 @@ public class ProcessoController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProcessoDTO>> buscarProcessos(@RequestParam(name = "cd_interessado", required = false) Integer cdInteressado,
-                                                          @RequestParam(name = "cd_assunto", required = false) Integer cdAssunto) {
+                                                             @RequestParam(name = "cd_assunto", required = false) Integer cdAssunto) {
 
         List<ProcessoDTO> response;
 
@@ -46,6 +43,11 @@ public class ProcessoController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProcessoDTO> cadastrarProcesso(@RequestBody ProcessoDTO processo) {
+        ProcessoDTO novoProcesso = processoService.cadastrarProcesso(processo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoProcesso);
+    }
 
     private ProcessoDTO toDTO(Processo processo) {
         return modelMapper.map(processo, ProcessoDTO.class);
