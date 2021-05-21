@@ -22,4 +22,4 @@ values ('Autorização para Corte de Árvores - Área Pública', '2021-05-19T22:
 
 insert into processo (chave_processo, descricao, nu_ano, nu_processo, sg_orgao_setor, cd_assunto, cd_interessado)
 values ('soft 1/2021', 'Processo', '2021', '1', 'soft', 1, 1),
-       ('soft 1/2021', 'Processo', '2021', '2', 'soft', 2, 2);
+       ('soft 2/2021', 'Processo', '2021', '2', 'soft', 2, 2);

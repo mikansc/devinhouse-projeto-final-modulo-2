@@ -15,7 +15,7 @@ public class Processo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = true)
+    @Column(nullable = true, unique = true)
     @Setter
     private Integer nuProcesso;
 
@@ -27,7 +27,7 @@ public class Processo {
     @Setter
     private String nuAno;
 
-    @Column(nullable = true, length = 50)
+    @Column(nullable = true, unique = true, length = 50)
     @Setter
     private String chaveProcesso;
 

@@ -70,7 +70,8 @@ public class ProcessoService {
     }
 
     public Processo buscarPorChaveProcesso(String chaveProcesso) {
-    	return processoRepository.findByChaveProcesso(chaveProcesso);
+    	return processoRepository.findByChaveProcesso(chaveProcesso)
+                .orElseThrow(()-> new ObjectNotFoundException("Nenhum processo encontrado com a chave de processo informada"));
     }
 
     public void apagarProcessoPorId(Integer id) {
