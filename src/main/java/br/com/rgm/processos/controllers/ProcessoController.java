@@ -23,17 +23,6 @@ public class ProcessoController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProcessoDTO> buscarProcesso(@PathVariable Integer id) {
-        Processo foundObj = processoService.buscarProcesso(id);
-        return ResponseEntity.ok(toDTO(foundObj));
-    }
-
-    @GetMapping(path = "/chave")
-    public ResponseEntity<ProcessoDTO> buscarProcessoPorChave(@RequestParam(name = "valor") String chave) {
-        Processo foundObj = processoService.buscarProcessoPorChave(chave);
-        return ResponseEntity.ok(toDTO(foundObj));
-    }
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,9 +58,9 @@ public class ProcessoController {
     	Processo processo = processoService.buscarPorId(id);
     	return ResponseEntity.ok(toDTO(processo));
     }
-    
-    @GetMapping(path="/chave",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProcessoDTO> buscarPorChaveProcesso(@RequestParam(name= "chave_processo") String chaveProcesso) {
+
+    @GetMapping(path="/chave-processo",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProcessoDTO> buscarPorChaveProcesso(@RequestParam(name= "valor") String chaveProcesso) {
     	Processo processo = processoService.buscarPorChaveProcesso(chaveProcesso);
     	return ResponseEntity.ok(toDTO(processo));
     }
