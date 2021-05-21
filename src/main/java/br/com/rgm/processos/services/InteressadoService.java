@@ -15,7 +15,7 @@ public class InteressadoService {
 	private InteressadoRepository interessadoRepository;
 	
 	public Interessado cadastrarInteressado(Interessado interessado) {
-		interessado.setFlAtivo(Ativo.SIM.getValor());
+		interessado.setFlAtivo(Ativo.SIM.value());
 		return interessadoRepository.save(interessado);
 	}
 	
