@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import br.com.rgm.processos.entities.Interessado;
 
+import java.util.Optional;
+
 @Repository
 public interface InteressadoRepository extends JpaRepository<Interessado,Integer> {
 	
-	public Interessado findBynuIdentificacao(String nuIdentificacao);
+	public Optional<Interessado> findBynuIdentificacao(String nuIdentificacao);
 
 }
