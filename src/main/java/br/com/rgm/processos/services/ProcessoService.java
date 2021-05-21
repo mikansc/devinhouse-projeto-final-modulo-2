@@ -5,6 +5,7 @@ import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.entities.Interessado;
 import br.com.rgm.processos.entities.Processo;
 import br.com.rgm.processos.repositories.ProcessoRepository;
+import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,4 +64,14 @@ public class ProcessoService {
         return modelMapper.map(result, ProcessoDTO.class);
     }
 
+    public Processo buscarProcesso(Integer id) {
+
+        return processoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com o ID informado"));
+    }
+
+    public Processo buscarProcessoPorChave(String chave) {
+        return processoRepository.findByChaveProcesso(chave)
+                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com a chave de processo informada"));
+    }
 }

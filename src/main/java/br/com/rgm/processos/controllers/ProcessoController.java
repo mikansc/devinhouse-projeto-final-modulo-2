@@ -23,32 +23,45 @@ public class ProcessoController {
     @Autowired
     ModelMapper modelMapper;
 
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProcessoDTO> buscarProcesso(@PathVariable Integer id) {
+        Processo foundObj = processoService.buscarProcesso(id);
+        return ResponseEntity.ok(toDTO(foundObj));
+    }
+
+    @GetMapping(path = "/chave")
+    public ResponseEntity<ProcessoDTO> buscarProcessoPorChave(@RequestParam(name = "valor") String chave) {
+        Processo foundObj = processoService.buscarProcessoPorChave(chave);
+        return ResponseEntity.ok(toDTO(foundObj));
+    }
+
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProcessoDTO>> buscarProcessos(@RequestParam(name = "cd_interessado", required = false) Integer cdInteressado,
                                                              @RequestParam(name = "cd_assunto", required = false) Integer cdAssunto) {
 
-        List<ProcessoDTO> response;
+        List<ProcessoDTO> foundObj;
 
         if (cdInteressado != null) {
             List<Processo> found = processoService.buscarPorInteressado(cdInteressado);
-            response = found.stream().map(this::toDTO).collect(Collectors.toList());
+            foundObj = found.stream().map(this::toDTO).collect(Collectors.toList());
         } else if (cdAssunto != null) {
             List<Processo> found = processoService.buscarPorAssunto(cdAssunto);
-            response = found.stream().map(this::toDTO).collect(Collectors.toList());
+            foundObj = found.stream().map(this::toDTO).collect(Collectors.toList());
         } else {
             List<Processo> found = processoService.buscarProcessos();
-            response = found.stream().map(this::toDTO).collect(Collectors.toList());
+            foundObj = found.stream().map(this::toDTO).collect(Collectors.toList());
         }
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(foundObj);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProcessoDTO> cadastrarProcesso(@RequestBody ProcessoDTO processo) {
 
-        ProcessoDTO novoProcesso = processoService.cadastrarProcesso(processo);
+        ProcessoDTO createdObj = processoService.cadastrarProcesso(processo);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoProcesso);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdObj);
     }
 
     private ProcessoDTO toDTO(Processo processo) {
