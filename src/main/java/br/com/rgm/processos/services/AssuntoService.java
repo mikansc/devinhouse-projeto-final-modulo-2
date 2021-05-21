@@ -17,7 +17,7 @@ public class AssuntoService {
 	private AssuntoRepository assuntoRepepository;
 
 	public Assunto cadastrarAssunto(Assunto novoAssunto) {
-		novoAssunto.setFlAtivo(Ativo.SIM.getValor());
+		novoAssunto.setFlAtivo(Ativo.SIM.value());
 		return assuntoRepepository.save(novoAssunto);
 	}
 	
