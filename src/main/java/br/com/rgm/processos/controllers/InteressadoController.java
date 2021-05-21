@@ -17,6 +17,8 @@ import br.com.rgm.processos.dto.InteressadoDTO;
 import br.com.rgm.processos.entities.Interessado;
 import br.com.rgm.processos.services.InteressadoService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path="v1/interessado", headers="api-version=v1")
 public class InteressadoController {
@@ -28,7 +30,7 @@ public class InteressadoController {
 	private ModelMapper modelMapper;
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<InteressadoDTO> cadastrarInteressado(@RequestBody InteressadoDTO interessadoDTO) {
+	public ResponseEntity<InteressadoDTO> cadastrarInteressado(@Valid @RequestBody InteressadoDTO interessadoDTO) {
 		Interessado interessado = toInteressado(interessadoDTO);
 		InteressadoDTO responseBody = toDTO(interessadoService.cadastrarInteressado(interessado));
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
