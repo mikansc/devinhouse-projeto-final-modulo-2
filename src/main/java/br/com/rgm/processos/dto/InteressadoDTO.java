@@ -13,23 +13,15 @@ import java.util.Date;
 @Setter
 public class InteressadoDTO {
 
-    @Getter
-    @Setter
     private Integer id;
 
-    @Getter
-    @Setter
     @NotBlank(message = "Você precisa informar um nome")
     private String nmInteressado;
 
-    @Getter
-    @Setter
     @NotBlank(message = "Você precisa informar um número de documento")
     @CPF(message = "Você precisa informar um número de CPF válido")
     private String nuIdentificacao;
 
-    @Getter
-    @Setter
     @NotBlank(message = "Você precisa informar uma data de nascimento válida")
     private Date dtNascimento;
 

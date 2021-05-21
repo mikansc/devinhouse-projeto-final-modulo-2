@@ -74,7 +74,7 @@ public class ProcessoController {
     
     @PutMapping(path="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> atualizarProcessoPorId(@PathVariable Integer id, @RequestBody ProcessoDTO processoDTO) {
-    	processoService.atualizarPorId(id, toProcesso(processoDTO));
+    	processoService.atualizarPorId(id, processoDTO);
     	return ResponseEntity.noContent().build();
     }
 
