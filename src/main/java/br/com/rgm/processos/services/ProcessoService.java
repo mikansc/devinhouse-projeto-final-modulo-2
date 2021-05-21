@@ -43,27 +43,24 @@ public class ProcessoService {
     }
 
     public ProcessoDTO cadastrarProcesso(ProcessoDTO processoObj) {
+
         Interessado interessado = interessadoService.buscarInteressado(processoObj.getCdInteressado());
         Assunto assunto = assuntoService.buscarAssunto(processoObj.getCdAssunto());
+
         processoObj.setAssunto(assunto);
         processoObj.setInteressado(interessado);
 
-        Processo temp = processoRepository.save(toProcesso(processoObj));
+        Processo temp = processoRepository.save(modelMapper.map(processoObj, Processo.class));
+
         temp.setNuProcesso(temp.getId());
         temp.setChaveProcesso(String.format("%s %d/%s",
                 temp.getSgOrgaoSetor(),
                 temp.getId(),
                 temp.getNuAno()));
+
         Processo result = processoRepository.save(temp);
 
-        return toDTO(result);
+        return modelMapper.map(result, ProcessoDTO.class);
     }
 
-    private ProcessoDTO toDTO(Processo processo) {
-        return modelMapper.map(processo, ProcessoDTO.class);
-    }
-
-    private Processo toProcesso(ProcessoDTO processoDTO) {
-        return modelMapper.map(processoDTO, Processo.class);
-    }
 }

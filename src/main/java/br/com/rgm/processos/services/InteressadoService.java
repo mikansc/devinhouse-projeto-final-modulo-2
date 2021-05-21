@@ -25,7 +25,8 @@ public class InteressadoService {
 	}
 	
 	public Interessado buscarInteressado(String nuIdentificacao) {
-		return interessadoRepository.findBynuIdentificacao(nuIdentificacao);
+		return interessadoRepository.findBynuIdentificacao(nuIdentificacao)
+				.orElseThrow(()-> new ObjectNotFoundException("Nenhum interessado encontrado com o número de identificação informado"));
 	}
 		
 }

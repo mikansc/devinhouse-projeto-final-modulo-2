@@ -45,7 +45,9 @@ public class ProcessoController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProcessoDTO> cadastrarProcesso(@RequestBody ProcessoDTO processo) {
+
         ProcessoDTO novoProcesso = processoService.cadastrarProcesso(processo);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(novoProcesso);
     }
 
