@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/v1/processo")
+@RequestMapping(path = "/v1/processo", headers="api-version=v1")
 public class ProcessoController {
 
     @Autowired
@@ -62,6 +62,30 @@ public class ProcessoController {
         ProcessoDTO createdObj = processoService.cadastrarProcesso(processo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdObj);
+    }
+    
+    @GetMapping(path="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProcessoDTO> buscarPorId(@PathVariable Integer id) {
+    	Processo processo = processoService.buscarPorId(id);
+    	return ResponseEntity.ok(toDTO(processo));
+    }
+    
+    @GetMapping(path="/chave",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProcessoDTO> buscarPorChaveProcesso(@RequestParam(name= "chave_processo") String chaveProcesso) {
+    	Processo processo = processoService.buscarPorChaveProcesso(chaveProcesso);
+    	return ResponseEntity.ok(toDTO(processo));
+    }
+    
+    @DeleteMapping(path="/{id}")
+    public ResponseEntity<?> apagarProcessoPorId(@PathVariable Integer id) {
+    	processoService.apagarProcessoPorId(id);
+    	return ResponseEntity.noContent().build();
+    }
+    
+    @PutMapping(path="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> atualizarProcessoPorId(@PathVariable Integer id, @RequestBody ProcessoDTO processoDTO) {
+    	processoService.atualizarPorId(id, toProcesso(processoDTO));
+    	return ResponseEntity.noContent().build();
     }
 
     private ProcessoDTO toDTO(Processo processo) {

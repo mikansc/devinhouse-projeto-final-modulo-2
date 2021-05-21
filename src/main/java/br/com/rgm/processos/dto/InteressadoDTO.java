@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class InteressadoDTO {
 
     @Getter

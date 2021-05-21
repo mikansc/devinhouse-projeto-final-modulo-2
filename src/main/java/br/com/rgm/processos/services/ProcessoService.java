@@ -64,14 +64,23 @@ public class ProcessoService {
         return modelMapper.map(result, ProcessoDTO.class);
     }
 
-    public Processo buscarProcesso(Integer id) {
-
-        return processoRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com o ID informado"));
+    public Processo buscarPorId(Integer id) {
+      return processoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com o ID informado"));  	
     }
 
-    public Processo buscarProcessoPorChave(String chave) {
-        return processoRepository.findByChaveProcesso(chave)
-                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com a chave de processo informada"));
+    public Processo buscarPorChaveProcesso(String chaveProcesso) {
+    	return processoRepository.findByChaveProcesso(chaveProcesso);
     }
+
+    public void apagarProcessoPorId(Integer id) {
+    	processoRepository.deleteById(id);
+    }
+
+    public void atualizarPorId(Integer id, Processo novoProcesso) {
+//    	if(processoRepository.existsById(id)) {
+//    		processoRepository.save(novoProcesso);    		
+//    	}
+    }
+
 }

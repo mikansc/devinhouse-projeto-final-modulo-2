@@ -9,10 +9,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class AssuntoDTO {
 
-	@Getter
-	@Setter
 	private Integer id;
 
 	@Getter

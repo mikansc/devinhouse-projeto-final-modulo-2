@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,20 +29,20 @@ public class AssuntoController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@PostMapping(consumes="application/json")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AssuntoDTO> cadastrarAssunto(@RequestBody AssuntoDTO assuntoDTO) {
 		Assunto assunto = toAssunto(assuntoDTO);
 		AssuntoDTO responseBody = toDTO(assuntoService.cadastrarAssunto(assunto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
 	}
 	
-	@GetMapping(path="/{id}", produces="application/json")
+	@GetMapping(path="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AssuntoDTO> buscarAssunto(@PathVariable Integer id) {
 		Assunto assunto = assuntoService.buscarAssunto(id);
 		return ResponseEntity.ok(toDTO(assunto));
 	}
 	
-	@GetMapping(produces="application/json")
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AssuntoDTO>> buscarTodosAssunto() {
 		List<Assunto> listaAssunto = assuntoService.buscarTodosAssuntos();
 		List<AssuntoDTO> listaAssuntoDTO = listaAssunto.stream()
