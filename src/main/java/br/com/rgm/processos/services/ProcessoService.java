@@ -5,6 +5,7 @@ import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.entities.Interessado;
 import br.com.rgm.processos.entities.Processo;
 import br.com.rgm.processos.repositories.ProcessoRepository;
+import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,24 +44,29 @@ public class ProcessoService {
     }
 
     public ProcessoDTO cadastrarProcesso(ProcessoDTO processoObj) {
+
         Interessado interessado = interessadoService.buscarInteressado(processoObj.getCdInteressado());
         Assunto assunto = assuntoService.buscarAssunto(processoObj.getCdAssunto());
+
         processoObj.setAssunto(assunto);
         processoObj.setInteressado(interessado);
 
-        Processo temp = processoRepository.save(toProcesso(processoObj));
+        Processo temp = processoRepository.save(modelMapper.map(processoObj, Processo.class));
+
         temp.setNuProcesso(temp.getId());
         temp.setChaveProcesso(String.format("%s %d/%s",
                 temp.getSgOrgaoSetor(),
                 temp.getId(),
                 temp.getNuAno()));
+
         Processo result = processoRepository.save(temp);
 
-        return toDTO(result);
+        return modelMapper.map(result, ProcessoDTO.class);
     }
 
     public Processo buscarPorId(Integer id) {
-    	return processoRepository.findById(id).get();
+      return processoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com o ID informado"));  	
     }
 
     public Processo buscarPorChaveProcesso(String chaveProcesso) {
@@ -76,15 +82,5 @@ public class ProcessoService {
 //    		processoRepository.save(novoProcesso);    		
 //    	}
     }
-    
-    private ProcessoDTO toDTO(Processo processo) {
-        return modelMapper.map(processo, ProcessoDTO.class);
-    }
-
-    private Processo toProcesso(ProcessoDTO processoDTO) {
-        return modelMapper.map(processoDTO, Processo.class);
-    }
-
-
 
 }

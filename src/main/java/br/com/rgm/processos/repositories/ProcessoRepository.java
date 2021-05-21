@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 import br.com.rgm.processos.entities.Processo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProcessoRepository extends JpaRepository<Processo,Integer> {
 
-    public Processo findByChaveProcesso(String chaveProcesso);
+    public Optional<Processo> findByChaveProcesso(String chaveProcesso);
     public List<Processo> findByInteressado(Interessado interessado);
     public List<Processo> findByAssunto(Assunto assunto);
 

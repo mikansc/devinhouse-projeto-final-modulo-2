@@ -2,6 +2,7 @@ package br.com.rgm.processos.services;
 
 import java.util.List;
 
+import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class AssuntoService {
 	}
 	
 	public Assunto buscarAssunto(Integer id) {
-		return assuntoRepepository.findById(id).get();
+		return assuntoRepepository.findById(id)
+				.orElseThrow(()-> new ObjectNotFoundException("Nenhum assunto encontrado com o ID informado"));
 	}
 	
 	public List<Assunto> buscarTodosAssuntos() {
