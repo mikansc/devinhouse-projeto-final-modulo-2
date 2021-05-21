@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class ProcessoController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProcessoDTO> cadastrarProcesso(@RequestBody ProcessoDTO processo) {
+    public ResponseEntity<ProcessoDTO> cadastrarProcesso(@Valid @RequestBody ProcessoDTO processo) {
 
         ProcessoDTO createdObj = processoService.cadastrarProcesso(processo);
 
