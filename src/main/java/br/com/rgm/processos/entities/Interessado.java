@@ -20,7 +20,7 @@ public class Interessado {
     @Setter
     private String nmInteressado;
 
-    @Column(nullable = false, length = 50)
+    @Column(unique=true, nullable = false, length = 50)
     @Setter
     private String nuIdentificacao;
 

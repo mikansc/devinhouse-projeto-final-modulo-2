@@ -15,13 +15,9 @@ public class AssuntoDTO {
 
 	private Integer id;
 
-	@Getter
-	@Setter
 	@NotNull(message = "Uma descrição para o assunto não foi informada")
 	private String descricao;
 
-	@Getter
-	@Setter
 	@NotNull(message = "Uma data de cadastro não foi informada")
 	private Date dtCadastro;
 }

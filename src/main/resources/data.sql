@@ -1,6 +1,6 @@
 insert into interessado (nm_interessado, nu_identificacao, dt_nascimento, fl_ativo)
-values ('Jose Joao', '12345678900', '2000-05-19T22:17:23.165Z', 'S'),
-       ('Maria Joaquina', '12345678900', '1998-05-19T22:17:23.165Z', 'S');
+values ('Jose Joao', '256.522.070-78', '2000-05-19T22:17:23.165Z', 'S'),
+       ('Maria Joaquina', '217.787.750-47', '1998-05-19T22:17:23.165Z', 'S');
 
 
 insert into assunto (descricao, dt_cadastro, fl_ativo)

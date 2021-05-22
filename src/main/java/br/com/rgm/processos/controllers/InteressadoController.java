@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,17 @@ public class InteressadoController {
 		Interessado interessado = interessadoService.buscarInteressado(indentificacao);
 		return ResponseEntity.ok(toDTO(interessado));
 	}
+	
+    @PutMapping(path="/alterar-ativo/{id}")
+    public ResponseEntity<?> alterarAtivoInteressado(@PathVariable Integer id) {
+    	interessadoService.alterarAtivoInteressado(id);
+    	return ResponseEntity.noContent().build();
+    }
+    @PutMapping(path="/{id}")
+    public ResponseEntity<?> atualizarInteressado(@PathVariable Integer id, @RequestBody InteressadoDTO interessadoDTO) {
+    	interessadoService.atualizarInteressado(id, toInteressado(interessadoDTO));
+    	return ResponseEntity.noContent().build();
+    }
 	
 	
 	private InteressadoDTO toDTO(Interessado interessado) {
