@@ -4,6 +4,7 @@ import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.entities.Interessado;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -29,10 +30,10 @@ public class ProcessoDTO {
     private String descricao;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @NotBlank(message = "Você precisa informar um cod. Assunto")
+    @NotNull(message = "Você precisa informar um cod. Assunto")
     private Integer cdAssunto;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @NotBlank(message = "Você precisa informar um cod. Interessado")
+    @NotNull(message = "Você precisa informar um cod. Interessado")
     private Integer cdInteressado;
 
     private Assunto assunto;

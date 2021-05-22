@@ -12,40 +12,43 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.net.http.HttpHeaders;
+import org.springframework.http.HttpHeaders;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Autowired
 	private MessageSource messageSource;
-	
-    @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException exception, HttpServletRequest request) {
 
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError error = new StandardError(status.value(), exception.getMessage(), System.currentTimeMillis(), null);
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException exception, HttpServletRequest request) {
 
-        return ResponseEntity.status(status).body(error);
-    }
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError error = new StandardError(status.value(), exception.getMessage(), System.currentTimeMillis(),
+				null);
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
-    	
-    	StandardError error = new StandardError(status.value(), "Um ou mais campos possuem um erro", System.currentTimeMillis(), null);
-    	new Locale("pt-BR");
-    	List<StandardError.Campo> campos = exception.getBindingResult()
-    			.getAllErrors()
-    			.stream()
-    			.map(ex -> new StandardError.Campo(((FieldError)ex).getField(), messageSource.getMessage(ex, LocaleContextHolder.getLocale()))).collect(Collectors.toList());
-    	error.setFields(campos);
-        return ResponseEntity.status(status).body(error);
-    }
+		return ResponseEntity.status(status).body(error);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		StandardError error = new StandardError(status.value(), "Um ou mais campos possuem um erro",
+				System.currentTimeMillis(), null);
+		new Locale("pt-BR");
+		List<StandardError.Campo> campos = exception.getBindingResult().getAllErrors().stream()
+				.map(ex -> new StandardError.Campo(((FieldError) ex).getField(),
+						messageSource.getMessage(ex, LocaleContextHolder.getLocale())))
+				.collect(Collectors.toList());
+		error.setFields(campos);
+		return super.handleExceptionInternal(exception, error, headers, status, request);
+	}
 }

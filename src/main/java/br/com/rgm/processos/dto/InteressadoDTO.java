@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class InteressadoDTO {
     @CPF(message = "Você precisa informar um número de CPF válido")
     private String nuIdentificacao;
 
-    @NotBlank(message = "Você precisa informar uma data de nascimento válida")
+    @NotNull(message = "Você precisa informar uma data de nascimento válida")
     private Date dtNascimento;
 
 }

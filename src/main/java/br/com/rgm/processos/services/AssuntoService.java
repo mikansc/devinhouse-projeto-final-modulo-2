@@ -14,20 +14,30 @@ import br.com.rgm.processos.utils.Ativo;
 public class AssuntoService {
 
 	@Autowired
-	private AssuntoRepository assuntoRepepository;
+	private AssuntoRepository assuntoRepository;
 
 	public Assunto cadastrarAssunto(Assunto novoAssunto) {
 		novoAssunto.setFlAtivo(Ativo.SIM.value());
-		return assuntoRepepository.save(novoAssunto);
+		return assuntoRepository.save(novoAssunto);
 	}
 	
 	public Assunto buscarAssunto(Integer id) {
-		return assuntoRepepository.findById(id)
+		return assuntoRepository.findById(id)
 				.orElseThrow(()-> new ObjectNotFoundException("Nenhum assunto encontrado com o ID informado"));
 	}
 	
 	public List<Assunto> buscarTodosAssuntos() {
-		return assuntoRepepository.findAll();
+		return assuntoRepository.findAll();
+	}
+	
+	public void alterarAtivoAssunto(Integer id) {
+		Assunto atual = assuntoRepository.findById(id).get();
+		if(atual.getFlAtivo() == Ativo.SIM.value()) {
+			atual.setFlAtivo(Ativo.NAO.value());			
+		} else {			
+			atual.setFlAtivo(Ativo.SIM.value());			
+		}
+		assuntoRepository.save(atual);
 	}
 
 }

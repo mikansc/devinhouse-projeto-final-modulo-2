@@ -6,6 +6,7 @@ import br.com.rgm.processos.entities.Interessado;
 import br.com.rgm.processos.entities.Processo;
 import br.com.rgm.processos.repositories.ProcessoRepository;
 import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
+import br.com.rgm.processos.utils.Ativo;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 
 import org.modelmapper.ModelMapper;
@@ -51,6 +52,12 @@ public class ProcessoService {
         Interessado interessado = interessadoService.buscarInteressado(processoObj.getCdInteressado());
         Assunto assunto = assuntoService.buscarAssunto(processoObj.getCdAssunto());
 
+        if(assunto.getFlAtivo() == Ativo.NAO.value()) {
+        	throw new ObjectNotFoundException("Assunto inativo, não é possivel cadastrar o Processo!");
+        } else if(interessado.getFlAtivo()== Ativo.NAO.value()) {
+        	throw new ObjectNotFoundException("Interessado inativo, não é possivel cadastrar o Processo!");     	
+        }
+        
         processoObj.setAssunto(assunto);
         processoObj.setInteressado(interessado);
 
@@ -92,7 +99,12 @@ public class ProcessoService {
         Processo novoProcesso = modelMapper.map(novoProcessoDTO, Processo.class);
     	
     	Processo processoAtual = this.buscarPorId(id);
-    	BeanUtils.copyProperties(novoProcesso, processoAtual, "id");
+    	processoAtual.setChaveProcesso(String.format("%s %d/%s",
+    			novoProcesso.getSgOrgaoSetor(),
+    			processoAtual.getId(),
+                novoProcesso.getNuAno()));
+    	
+    	BeanUtils.copyProperties(novoProcesso, processoAtual, "id","chaveProcesso","nuProcesso");
     	
     	processoRepository.save(processoAtual);
     	

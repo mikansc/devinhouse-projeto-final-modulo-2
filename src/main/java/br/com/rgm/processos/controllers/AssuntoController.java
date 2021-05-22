@@ -45,6 +45,12 @@ public class AssuntoController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(listaAssuntoDTO);
     }
+    
+    @PutMapping(path="/alterar-ativo/{id}")
+    public ResponseEntity<?> alterarAtivoAssunto(@PathVariable Integer id) {
+    	assuntoService.alterarAtivoAssunto(id);
+    	return ResponseEntity.noContent().build();
+    }
 
     private AssuntoDTO toDTO(Assunto assunto) {
         return modelMapper.map(assunto, AssuntoDTO.class);
