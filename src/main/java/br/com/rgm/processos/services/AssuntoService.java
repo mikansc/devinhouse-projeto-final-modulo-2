@@ -26,8 +26,13 @@ public class AssuntoService {
 				.orElseThrow(()-> new ObjectNotFoundException("Nenhum assunto encontrado com o ID informado"));
 	}
 	
-	public List<Assunto> buscarTodosAssuntos() {
-		return assuntoRepository.findAll();
+	public List<Assunto> buscarTodosAssuntos(Character ativo) {
+//		return assuntoRepository.findAll();
+		if(ativo != null) {
+			return assuntoRepository.findAllActive(ativo);
+		} else {
+			return assuntoRepository.findAll();
+		}
 	}
 	
 	public void alterarAtivoAssunto(Integer id) {

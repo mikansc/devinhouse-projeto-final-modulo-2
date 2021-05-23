@@ -38,18 +38,18 @@ public class AssuntoController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AssuntoDTO>> buscarTodosAssunto() {
-        List<Assunto> listaAssunto = assuntoService.buscarTodosAssuntos();
+    public ResponseEntity<List<AssuntoDTO>> buscarTodosAssunto(@RequestParam(required = false) Character ativo) {
+        List<Assunto> listaAssunto = assuntoService.buscarTodosAssuntos(ativo);
         List<AssuntoDTO> listaAssuntoDTO = listaAssunto.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(listaAssuntoDTO);
     }
-    
-    @PutMapping(path="/alterar-ativo/{id}")
+
+    @PutMapping(path = "/alterar-ativo/{id}")
     public ResponseEntity<?> alterarAtivoAssunto(@PathVariable Integer id) {
-    	assuntoService.alterarAtivoAssunto(id);
-    	return ResponseEntity.noContent().build();
+        assuntoService.alterarAtivoAssunto(id);
+        return ResponseEntity.noContent().build();
     }
 
     private AssuntoDTO toDTO(Assunto assunto) {
