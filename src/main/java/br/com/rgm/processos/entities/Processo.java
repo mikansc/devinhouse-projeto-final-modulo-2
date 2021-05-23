@@ -15,7 +15,7 @@ public class Processo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     @Setter
     private Integer nuProcesso;
 
@@ -27,7 +27,7 @@ public class Processo {
     @Setter
     private String nuAno;
 
-    @Column(nullable = true, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     @Setter
     private String chaveProcesso;
 
@@ -44,4 +44,18 @@ public class Processo {
     @JoinColumn(name = "cdInteressado", nullable = false)
     @Setter
     private Interessado interessado;
+
+    @PrePersist
+    public void validaCamposAutoGerados() {
+        if (nuProcesso == null) {
+            nuProcesso = 0;
+        }
+        chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+    }
+
+    @PostPersist
+    public void geraVaLoresCamposAutoGerados() {
+        nuProcesso = this.id;
+        chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+    }
 }

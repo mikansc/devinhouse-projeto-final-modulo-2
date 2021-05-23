@@ -1,5 +1,6 @@
 package br.com.rgm.processos.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class InteressadoDTO {
     private String nuIdentificacao;
 
     @NotNull(message = "Você precisa informar uma data de nascimento válida")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dtNascimento;
 
 }

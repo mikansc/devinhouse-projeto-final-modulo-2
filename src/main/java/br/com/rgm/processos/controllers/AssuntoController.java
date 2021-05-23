@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "v1/assunto", headers = "api-version=v1")
+@RequestMapping(path = "v1/assuntos", headers = "api-version=v1")
 public class AssuntoController {
 
     @Autowired
@@ -24,11 +24,13 @@ public class AssuntoController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AssuntoDTO> cadastrarAssunto(@Valid @RequestBody AssuntoDTO assuntoDTO) {
-        Assunto assunto = toAssunto(assuntoDTO);
-        AssuntoDTO responseBody = toDTO(assuntoService.cadastrarAssunto(assunto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AssuntoDTO>> buscarTodosAssunto(@RequestParam(required = false) Character ativo) {
+        List<Assunto> listaAssunto = assuntoService.buscarTodosAssuntos(ativo);
+        List<AssuntoDTO> listaAssuntoDTO = listaAssunto.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(listaAssuntoDTO);
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,19 +39,17 @@ public class AssuntoController {
         return ResponseEntity.ok(toDTO(assunto));
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AssuntoDTO>> buscarTodosAssunto() {
-        List<Assunto> listaAssunto = assuntoService.buscarTodosAssuntos();
-        List<AssuntoDTO> listaAssuntoDTO = listaAssunto.stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(listaAssuntoDTO);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AssuntoDTO> cadastrarAssunto(@Valid @RequestBody AssuntoDTO assuntoDTO) {
+        Assunto assunto = toAssunto(assuntoDTO);
+        AssuntoDTO responseBody = toDTO(assuntoService.cadastrarAssunto(assunto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
-    
-    @PutMapping(path="/alterar-ativo/{id}")
+
+    @PutMapping(path = "/alterar-ativo/{id}")
     public ResponseEntity<?> alterarAtivoAssunto(@PathVariable Integer id) {
-    	assuntoService.alterarAtivoAssunto(id);
-    	return ResponseEntity.noContent().build();
+        assuntoService.alterarAtivoAssunto(id);
+        return ResponseEntity.noContent().build();
     }
 
     private AssuntoDTO toDTO(Assunto assunto) {

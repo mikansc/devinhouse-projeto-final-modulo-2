@@ -21,5 +21,5 @@ values ('Autorização para Corte de Árvores - Área Pública', '2021-05-19T22:
         ('Gratificação de Incentivo', '2021-05-19T22:21:11.024Z', 'S');
 
 insert into processo (chave_processo, descricao, nu_ano, nu_processo, sg_orgao_setor, cd_assunto, cd_interessado)
-values ('soft 1/2021', 'Processo', '2021', '1', 'soft', 1, 1),
-       ('soft 2/2021', 'Processo', '2021', '2', 'soft', 2, 2);
+values ('SOFT 1/2021', 'Processo', '2021', '1', 'soft', 1, 1),
+       ('SOFT 2/2021', 'Processo', '2021', '2', 'soft', 2, 2);
