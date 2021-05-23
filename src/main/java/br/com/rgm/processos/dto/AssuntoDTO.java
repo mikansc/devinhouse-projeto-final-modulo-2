@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class AssuntoDTO {
 
 	private Integer id;
 
-	@NotNull(message = "Uma descrição para o assunto não foi informada")
+	@NotBlank(message = "Uma descrição para o assunto não foi informada")
 	private String descricao;
 
 	@NotNull(message = "Uma data de cadastro não foi informada")

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/v1/processo", headers = "api-version=v1")
+@RequestMapping(path = "/v1/processos", headers = "api-version=v1")
 public class ProcessoController {
 
     @Autowired
