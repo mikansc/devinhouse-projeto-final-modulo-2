@@ -5,6 +5,7 @@ import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -32,6 +33,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError error = new StandardError(status.value(), exception.getMessage(), System.currentTimeMillis(),
+				null);
+
+		return ResponseEntity.status(status).body(error);
+	}
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardError> objectNotFound(DataIntegrityViolationException exception, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		StandardError error = new StandardError(status.value(), "Operação não permitida. Contacte o administrador do sistema.", System.currentTimeMillis(),
 				null);
 
 		return ResponseEntity.status(status).body(error);

@@ -35,7 +35,7 @@ public class ProcessoService {
     }
 
     public List<Processo> buscarPorInteressado(Integer cdInteressado) {
-        Interessado interessado = interessadoService.buscarInteressado(cdInteressado);
+        Interessado interessado = interessadoService.buscarPorId(cdInteressado);
         List<Processo> response = processoRepository.findByInteressado(interessado);
         return response;
     }
@@ -63,7 +63,7 @@ public class ProcessoService {
             throw new ObjectNotFoundException("Assunto inativo, não é possivel cadastrar o Processo!");
         }
 
-        Interessado interessado = interessadoService.buscarInteressado(createdProcessoDTO.getCdInteressado());
+        Interessado interessado = interessadoService.buscarPorId(createdProcessoDTO.getCdInteressado());
         if (interessado.getFlAtivo() == Ativo.NAO.value()) {
             throw new ObjectNotFoundException("Interessado inativo, não é possivel cadastrar o Processo!");
         }
@@ -79,7 +79,7 @@ public class ProcessoService {
 
     public void atualizarPorId(Integer id, ProcessoDTOInput processoAtualizadoDTO) {
 
-        Interessado interessado = interessadoService.buscarInteressado(processoAtualizadoDTO.getCdInteressado());
+        Interessado interessado = interessadoService.buscarPorId(processoAtualizadoDTO.getCdInteressado());
         Assunto assunto = assuntoService.buscarAssunto(processoAtualizadoDTO.getCdAssunto());
         Processo processoExistente = this.buscarPorId(id);
 

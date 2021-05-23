@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "v1/interessados", headers = "api-version=v1")
@@ -22,15 +24,22 @@ public class InteressadoController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<InteressadoDTO>> buscarInteressados(@RequestParam(required = false) Character ativo) {
+        List<Interessado> foundList = interessadoService.buscarTodosInteressados(ativo);
+        List<InteressadoDTO> response = foundList.stream().map(this::toDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<InteressadoDTO> buscarInteressado(@PathVariable Integer id) {
-        Interessado interessado = interessadoService.buscarInteressado(id);
+    public ResponseEntity<InteressadoDTO> buscarPorId(@PathVariable Integer id) {
+        Interessado interessado = interessadoService.buscarPorId(id);
         return ResponseEntity.ok(toDTO(interessado));
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<InteressadoDTO> buscarInteressadoComNumeroIndentificação(@RequestParam(name = "numero_indentificacao") String indentificacao) {
-        Interessado interessado = interessadoService.buscarInteressado(indentificacao);
+    @GetMapping(path = "/documento", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<InteressadoDTO> buscarPorDocumento(@RequestParam(name = "cpf") String documento) {
+        Interessado interessado = interessadoService.buscarPorDocumento(documento);
         return ResponseEntity.ok(toDTO(interessado));
     }
 
