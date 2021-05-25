@@ -16,7 +16,6 @@ public class Assunto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
     private Integer id;
 
     @Column(nullable = false)

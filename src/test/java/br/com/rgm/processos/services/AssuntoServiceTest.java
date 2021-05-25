@@ -4,7 +4,6 @@ import br.com.rgm.processos.entities.Assunto;
 import br.com.rgm.processos.repositories.AssuntoRepository;
 import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import br.com.rgm.processos.utils.Ativo;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -12,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +19,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 
@@ -95,16 +94,32 @@ class AssuntoServiceTest {
         when(assuntoRepository.findAll()).thenReturn(List.of(mock(Assunto.class)));
 
         // when
-        List<Assunto> assuntoList = sut.buscarTodosAssuntos(null);
+        sut.buscarTodosAssuntos(null);
 
         // then
-        assertThat(assuntoList).asList().hasOnlyElementsOfType(Assunto.class);
-//        verify(assuntoRepository).findAll();
+        verify(assuntoRepository).findAll();
 
     }
 
     @Test
-    @Disabled
-    void alterarAtivoAssunto() {
+    void deveAlterarFlAtivoDoAssuntoParaInativo() {
+    	//given
+    	Assunto assunto = new Assunto(1,"descricao",new Date(),'S');
+    	when(assuntoRepository.findById(eq(1))).thenReturn(Optional.of(assunto));
+    	//when
+        sut.alterarAtivoAssunto(1);
+    	//then
+        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo('N');
+    }
+    
+    @Test
+    void deveAlterarFlAtivoDoAssuntoParaAtivo() {
+    	//given
+    	Assunto assunto = new Assunto(1,"descricao",new Date(),'N');
+    	when(assuntoRepository.findById(eq(1))).thenReturn(Optional.of(assunto));
+    	//when
+        sut.alterarAtivoAssunto(1);
+    	//then
+        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo('S');
     }
 }
