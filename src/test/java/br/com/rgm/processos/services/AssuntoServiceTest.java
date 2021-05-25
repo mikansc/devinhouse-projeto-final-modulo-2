@@ -37,6 +37,7 @@ class AssuntoServiceTest {
         //given
         Assunto assunto = new Assunto();
         assunto.setDescricao(anyString());
+        assunto.setDtCadastro(new Date());
 
         //when
         sut.cadastrarAssunto(assunto);
@@ -48,6 +49,8 @@ class AssuntoServiceTest {
         Assunto capturedAssunto = assuntoArgumentCaptor.getValue();
         assertThat(capturedAssunto).isEqualTo(assunto);
         assertThat(capturedAssunto.getFlAtivo()).isEqualTo(Ativo.SIM.value());
+        assertThat(capturedAssunto.getDescricao()).isEqualTo(assunto.getDescricao());
+        assertThat(capturedAssunto.getDtCadastro()).isEqualTo(assunto.getDtCadastro());
 
     }
 
