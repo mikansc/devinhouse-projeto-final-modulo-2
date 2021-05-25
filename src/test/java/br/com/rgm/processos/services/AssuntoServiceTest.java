@@ -104,22 +104,22 @@ class AssuntoServiceTest {
     @Test
     void deveAlterarFlAtivoDoAssuntoParaInativo() {
     	//given
-    	Assunto assunto = new Assunto(1,"descricao",new Date(),'S');
+    	Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.SIM.value());
     	when(assuntoRepository.findById(eq(1))).thenReturn(Optional.of(assunto));
     	//when
         sut.alterarAtivoAssunto(1);
     	//then
-        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo('N');
+        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo(Ativo.NAO.value());
     }
     
     @Test
     void deveAlterarFlAtivoDoAssuntoParaAtivo() {
     	//given
-    	Assunto assunto = new Assunto(1,"descricao",new Date(),'N');
+    	Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.NAO.value());
     	when(assuntoRepository.findById(eq(1))).thenReturn(Optional.of(assunto));
     	//when
         sut.alterarAtivoAssunto(1);
     	//then
-        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo('S');
+        assertThat(sut.buscarAssunto(1).getFlAtivo()).isEqualTo(Ativo.SIM.value());
     }
 }
