@@ -1,14 +1,10 @@
 package br.com.rgm.processos.repositories;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,17 +23,6 @@ class InteressadoRepositoryTest {
 		sut.deleteAll();
 	}
 
-	@BeforeEach
-	void setup() {
-		Interessado interessado = new Interessado();
-		interessado.setDtNascimento(new Date());
-		interessado.setFlAtivo(Ativo.SIM.value());
-		interessado.setNmInteressado("numero");
-		interessado.setNuIdentificacao("indentificacao");
-
-		sut.save(interessado);
-	}
-
 	@Test
 	void deveBuscarTodosOsAssuntosComOFlAtivoInformado() {
 
@@ -53,9 +38,9 @@ class InteressadoRepositoryTest {
 	void deveBuscarPeloNumeroDeIndentificacao() {
 		// given
 		// when
-		Interessado result = sut.findBynuIdentificacao("indentificacao").get();
+		Interessado result = sut.findBynuIdentificacao("217.787.750-47").get();
 		// then
 		assertThat(result).isOfAnyClassIn(Interessado.class);
-		assertThat(result.getNmInteressado()).isEqualTo("numero");
+		assertThat(result.getNmInteressado()).isEqualTo("Maria Joaquina");
 	}
 }
