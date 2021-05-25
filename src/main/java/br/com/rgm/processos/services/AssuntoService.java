@@ -27,7 +27,6 @@ public class AssuntoService {
 	}
 	
 	public List<Assunto> buscarTodosAssuntos(Character ativo) {
-//		return assuntoRepository.findAll();
 		if(ativo != null) {
 			return assuntoRepository.findAllActive(ativo);
 		} else {
