@@ -2,16 +2,12 @@ package br.com.rgm.processos.controllers;
 
 import br.com.rgm.processos.dto.AssuntoDTO;
 import br.com.rgm.processos.entities.Assunto;
-import br.com.rgm.processos.repositories.AssuntoRepository;
 import br.com.rgm.processos.services.AssuntoService;
 import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import br.com.rgm.processos.utils.Ativo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,7 +24,6 @@ import java.util.Date;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,10 +49,6 @@ class AssuntoControllerTest {
 
     @MockBean
     private AssuntoService assuntoService;
-
-    @MockBean
-    private AssuntoRepository assuntoRepository;
-
 
     @Test
     @DisplayName("Deve retornar uma lista de assuntos e status 200 - OK")
@@ -167,7 +158,6 @@ class AssuntoControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").isNotEmpty())
-                .andExpect(jsonPath("dtCadastro").isNotEmpty())
                 .andExpect(jsonPath("dtCadastro").isNotEmpty())
                 .andExpect(jsonPath("descricao").value(dto.getDescricao()));
 
