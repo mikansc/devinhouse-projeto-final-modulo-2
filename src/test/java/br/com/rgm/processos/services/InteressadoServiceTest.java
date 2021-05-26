@@ -81,7 +81,7 @@ class InteressadoServiceTest {
 	}
 
 	@Test
-	void testBuscarPorDocumento() {
+	void deveBuscarUmInteressadoPorNumeroDeIndentificacao() {
 		// given
 		when(interessadoRepository.findBynuIdentificacao(anyString())).thenReturn(Optional.of(mock(Interessado.class)));
 
