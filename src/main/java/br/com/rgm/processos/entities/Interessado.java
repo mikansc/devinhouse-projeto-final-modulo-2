@@ -16,6 +16,7 @@ public class Interessado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Integer id;
 
     @Column(nullable = false)
