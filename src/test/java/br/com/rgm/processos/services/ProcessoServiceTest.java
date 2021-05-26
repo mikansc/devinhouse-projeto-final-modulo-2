@@ -192,7 +192,7 @@ class ProcessoServiceTest {
 	}
 
 	@Test
-	void testAtualizarPorId() {
+	void atualizaProcessoPeloSeuId() {
 		// given
 		Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.SIM.value());
 		Interessado interessado = new Interessado(1,"Nome","Indentificacao",new Date(),Ativo.SIM.value());

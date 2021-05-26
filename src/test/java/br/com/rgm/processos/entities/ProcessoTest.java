@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class ProcessoTest {
 
 	@Test
-	void testValidaCamposAutoGerados() {
+	void testaOMetodoValidaCamposAutoGerados() {
 		// given
 		Processo processo = new Processo();
 		processo.setNuAno("2020");
@@ -29,7 +29,7 @@ class ProcessoTest {
 	}
 
 	@Test
-	void testGeraVaLoresCamposAutoGerados() {
+	void testaOMetodoGeraVaLoresCamposAutoGerados() {
 		// given
 		Processo processo = new Processo(1,0,"SOFT","2020","null","Processo Teste",null,null);
 		// when

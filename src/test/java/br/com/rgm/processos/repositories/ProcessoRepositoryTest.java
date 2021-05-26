@@ -26,7 +26,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindByChaveProcesso() {
+	void deveBuscarPelaChaveProcesso() {
 		// given
 		// when
 		Processo result = sut.findByChaveProcesso("SOFT 1/2021").get();
@@ -37,7 +37,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindByInteressado() {
+	void deveBuscarPeloInteressado() {
 		// given
 		Interessado interessado = new Interessado(2,"Maria Joaquina", "217.787.750-47", new Date(), 'S');
 		// when
@@ -48,7 +48,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindByAssunto() {
+	void deveBuscarPeloAssunto() {
 		// given
 		Assunto assunto = new Assunto(1, "Autorização para Corte de Árvores - Área Pública", new Date(), 'S');
 		// when
