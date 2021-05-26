@@ -81,8 +81,4 @@ public class ProcessoController {
     private ProcessoDTOOutput toOutputDTO(Processo processo) {
         return modelMapper.map(processo, ProcessoDTOOutput.class);
     }
-
-    private Processo toProcesso(ProcessoDTOInput processoDTOInput) {
-        return modelMapper.map(processoDTOInput, Processo.class);
-    }
 }

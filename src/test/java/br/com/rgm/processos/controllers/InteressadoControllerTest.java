@@ -191,8 +191,6 @@ class InteressadoControllerTest {
         dto.setNuIdentificacao(CPF);
         dto.setDtNascimento(NASCIMENTO);
 
-        String json = new ObjectMapper().writeValueAsString(dto);
-
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(INTERESSADOS_URI)
                 .content(objectMapper.writeValueAsString(dto))
@@ -219,7 +217,6 @@ class InteressadoControllerTest {
     void atualizarInteressado() throws Exception {
         // given
         InteressadoDTO dto = new InteressadoDTO();
-        String json = new ObjectMapper().writeValueAsString(dto);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .put(INTERESSADOS_URI.concat("/1"))

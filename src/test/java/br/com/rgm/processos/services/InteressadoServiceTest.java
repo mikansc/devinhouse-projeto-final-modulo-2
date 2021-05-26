@@ -16,14 +16,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.rgm.processos.entities.Interessado;
 import br.com.rgm.processos.repositories.InteressadoRepository;
 import br.com.rgm.processos.services.exceptions.ObjectNotFoundException;
 import br.com.rgm.processos.utils.Ativo;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 class InteressadoServiceTest {
 
 	@Mock
