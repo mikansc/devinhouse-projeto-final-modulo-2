@@ -30,7 +30,7 @@ class AssuntoRepositoryTest {
 
         // given
         Assunto assunto = new Assunto();
-        assunto.setDescricao(anyString());
+        assunto.setDescricao("any string");
         assunto.setDtCadastro(new Date());
         assunto.setFlAtivo(Ativo.SIM.value());
 

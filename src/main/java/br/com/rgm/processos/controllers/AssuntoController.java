@@ -41,23 +41,19 @@ public class AssuntoController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AssuntoDTO> cadastrarAssunto(@Valid @RequestBody AssuntoDTO assuntoDTO) {
-        Assunto assunto = toAssunto(assuntoDTO);
-        AssuntoDTO responseBody = toDTO(assuntoService.cadastrarAssunto(assunto));
+        Assunto assunto = modelMapper.map(assuntoDTO, Assunto.class);
+        AssuntoDTO responseBody = modelMapper.map(assuntoService.cadastrarAssunto(assunto), AssuntoDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
     }
 
-    @PutMapping(path = "/alterar-ativo/{id}")
-    public ResponseEntity<?> alterarAtivoAssunto(@PathVariable Integer id) {
+    @PutMapping(path = "/alterar-ativo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> alterarAtivoAssunto(@PathVariable Integer id) {
         assuntoService.alterarAtivoAssunto(id);
         return ResponseEntity.noContent().build();
     }
 
     private AssuntoDTO toDTO(Assunto assunto) {
         return modelMapper.map(assunto, AssuntoDTO.class);
-    }
-
-    private Assunto toAssunto(AssuntoDTO assuntoDTO) {
-        return modelMapper.map(assuntoDTO, Assunto.class);
     }
 
 }
