@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -212,6 +213,37 @@ class InteressadoControllerTest {
                 .andExpect(jsonPath("nmInteressado").value(dto.getNmInteressado()));
     }
 
+    @Test
+    @DisplayName("Ao tentar cadastrar um interessado repetido deve retornar um JSON de erro e o status 403 - Forbidden")
+    void deveRetornarUmaExcecaoAoTentarCadastrarUmInteressadoQueJaEstaNoBanco() throws Exception {
+        // given
+    	DataIntegrityViolationException exception = new DataIntegrityViolationException("0");
+    	InteressadoDTO dto = new InteressadoDTO();
+        dto.setNmInteressado(NOME);
+        dto.setNuIdentificacao(CPF);
+        dto.setDtNascimento(NASCIMENTO);
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(INTERESSADOS_URI)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("api-version", "v1");
+
+        when(interessadoService.cadastrarInteressado(any(Interessado.class))).thenThrow(exception);
+
+        // when
+        ResultActions perform = mvc.perform(request);
+
+        // then
+        perform
+                .andExpect(status().isForbidden())
+                .andDo(print())
+                .andExpect(jsonPath("statusCode").value("403"))
+                .andExpect(jsonPath("timestamp").isNotEmpty())
+                .andExpect(jsonPath("fields").doesNotExist())
+                .andExpect(jsonPath("message").value("Operação não permitida. Contacte o administrador do sistema."));
+    }
+    
     @Test
     @DisplayName("Deve retornar Status 204 - No Content")
     void atualizarInteressado() throws Exception {

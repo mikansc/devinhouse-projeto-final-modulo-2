@@ -345,7 +345,7 @@ class ProcessoControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tenta cadastrar um processo com objeto Inativo deve retornar um JSON de erro e o status")
+	@DisplayName("Tenta cadastrar um processo com objeto Inativo deve retornar um JSON de erro e o status 400 - Bad Request")
 	void testCadastroProcessoErroInativo() throws Exception {
 		// given
 		ProcessoDTOInput processoDTOInput = new ProcessoDTOInput();

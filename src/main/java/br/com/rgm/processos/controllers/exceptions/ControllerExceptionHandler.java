@@ -46,6 +46,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
+    
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> objectNotFound(DataIntegrityViolationException exception, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        StandardError error = new StandardError(status.value(), "Operação não permitida. Contacte o administrador do sistema.", System.currentTimeMillis(),
+                null);
+
+        return ResponseEntity.status(status).body(error);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
