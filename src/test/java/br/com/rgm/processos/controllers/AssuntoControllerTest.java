@@ -8,7 +8,6 @@ import br.com.rgm.processos.utils.Ativo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,9 +36,6 @@ class AssuntoControllerTest {
     static final String DESCRICAO = "descricao";
     static final Date DATA = new Date();
 
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     private MockMvc mvc;
@@ -138,8 +134,6 @@ class AssuntoControllerTest {
         AssuntoDTO dto = new AssuntoDTO();
         dto.setDtCadastro(DATA);
         dto.setDescricao(DESCRICAO);
-
-        String json = new ObjectMapper().writeValueAsString(dto);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(ASSUNTO_URI)

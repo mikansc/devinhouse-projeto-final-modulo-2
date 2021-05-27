@@ -1,7 +1,5 @@
 package br.com.rgm.processos.dto;
 
-import br.com.rgm.processos.entities.Assunto;
-import br.com.rgm.processos.entities.Interessado;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -46,7 +46,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
-
+    
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> objectNotFound(DataIntegrityViolationException exception, HttpServletRequest request) {
 
