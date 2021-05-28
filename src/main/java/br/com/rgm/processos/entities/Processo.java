@@ -15,6 +15,7 @@ public class Processo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Integer id;
 
     @Column(nullable = false, unique = true)
@@ -46,6 +47,13 @@ public class Processo {
     @JoinColumn(name = "cdInteressado", nullable = false)
     @Setter
     private Interessado interessado;
+
+    @Transient
+    @Setter
+    private Integer cdAssunto;
+    @Transient
+    @Setter
+    private Integer cdInteressado;
 
     @PrePersist
     public void validaCamposAutoGerados() {

@@ -133,22 +133,22 @@ class ProcessoServiceTest {
 		// given
 		Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.SIM.value());
 		Interessado interessado = new Interessado(1,"Nome","Indentificacao",new Date(),Ativo.SIM.value());
-		ProcessoDTOInput processoDTOinput = new ProcessoDTOInput();
-		processoDTOinput.setCdAssunto(1);
-		processoDTOinput.setCdInteressado(1);
-		processoDTOinput.setId(1);
-		processoDTOinput.setNuProcesso(1);
-		processoDTOinput.setDescricao("Processo Teste");
-		processoDTOinput.setNuAno("2020");
-		processoDTOinput.setSgOrgaoSetor("SOFT");
-		processoDTOinput.setChaveProcesso("SOFT 1/2020");
-		Processo processoResultado = new Processo(1,1,"SOFT","2020","SOFT 1/2020","Processo Teste",assunto,interessado);
+		Processo processo = new Processo();
+		processo.setCdAssunto(1);
+		processo.setCdInteressado(1);
+		processo.setId(1);
+		processo.setNuProcesso(1);
+		processo.setDescricao("Processo Teste");
+		processo.setNuAno("2020");
+		processo.setSgOrgaoSetor("SOFT");
+		processo.setChaveProcesso("SOFT 1/2020");
+		Processo processoResultado = new Processo(1,1,"SOFT","2020","SOFT 1/2020","Processo Teste",assunto,interessado, null, null);
 		when(assuntoService.buscarAssunto(1)).thenReturn(assunto);
 		when(interessadoService.buscarPorId(1)).thenReturn(interessado);
-		when(modelMapper.map(processoDTOinput, Processo.class)).thenReturn(processoResultado);
+		when(modelMapper.map(processo, Processo.class)).thenReturn(processoResultado);
 		
 		// when
-		sut.cadastrarProcesso(processoDTOinput);
+		sut.cadastrarProcesso(processo);
 		
 		// then
 		ArgumentCaptor<Processo> processoArgumentCaptor = ArgumentCaptor.forClass(Processo.class);
@@ -165,14 +165,14 @@ class ProcessoServiceTest {
 		// given
 		Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.SIM.value());
 		Interessado interessado = new Interessado(1,"Nome","Indentificacao",new Date(),Ativo.NAO.value());
-		ProcessoDTOInput processoDTOinput = new ProcessoDTOInput();
-		processoDTOinput.setCdAssunto(1);
-		processoDTOinput.setCdInteressado(1);
+		Processo processo = new Processo();
+		processo.setCdAssunto(1);
+		processo.setCdInteressado(1);
 		when(assuntoService.buscarAssunto(1)).thenReturn(assunto);
 		when(interessadoService.buscarPorId(1)).thenReturn(interessado);
 		// when
 		// then
-		assertThatThrownBy(() -> sut.cadastrarProcesso(processoDTOinput))
+		assertThatThrownBy(() -> sut.cadastrarProcesso(processo))
 			.isInstanceOf(InactiveObjectException.class)
 			.hasMessageContaining("Interessado inativo, não é possivel cadastrar o Processo!");
 	}
@@ -181,12 +181,12 @@ class ProcessoServiceTest {
 	void deveEstourarExcecaoSeAssuntoEstiverInativoNoCadastro() {
 		// given
 		Assunto assunto = new Assunto(1,"descricao",new Date(),Ativo.NAO.value());
-		ProcessoDTOInput processoDTOinput = new ProcessoDTOInput();
-		processoDTOinput.setCdAssunto(1);
+		Processo processo = new Processo();
+		processo.setCdAssunto(1);
 		when(assuntoService.buscarAssunto(1)).thenReturn(assunto);
 		// when
 		// then
-		assertThatThrownBy(() -> sut.cadastrarProcesso(processoDTOinput))
+		assertThatThrownBy(() -> sut.cadastrarProcesso(processo))
 			.isInstanceOf(InactiveObjectException.class)
 			.hasMessageContaining("Assunto inativo, não é possivel cadastrar o Processo!");
 	}
@@ -207,8 +207,8 @@ class ProcessoServiceTest {
 		processoDTOinput.setNuAno("2010");
 		processoDTOinput.setSgOrgaoSetor("SOFT");
 		processoDTOinput.setChaveProcesso("NULL");
-		Processo processoResultado = new Processo(1,1,"TEST","2020","TEST 1/2020","Processo Teste",assunto,interessado);
-		Processo processoAtualizado = new Processo(1,1,"SOFT","2010","NULL","Processo Teste Atualizado",assunto,interessado);
+		Processo processoResultado = new Processo(1,1,"TEST","2020","TEST 1/2020","Processo Teste",assunto,interessado, null,null);
+		Processo processoAtualizado = new Processo(1,1,"SOFT","2010","NULL","Processo Teste Atualizado",assunto,interessado, null, null);
 		when(assuntoService.buscarAssunto(1)).thenReturn(assuntoNovo);
 		when(interessadoService.buscarPorId(1)).thenReturn(interessadoNovo);
 		when(processoRepository.findById(1)).thenReturn(Optional.of(processoResultado));

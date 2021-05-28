@@ -60,10 +60,11 @@ public class ProcessoController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProcessoDTOOutput> cadastrarProcesso(@Valid @RequestBody ProcessoDTOInput processo) {
+        Processo createdObj = processoService.cadastrarProcesso(modelMapper.map(processo, Processo.class));
 
-        ProcessoDTOOutput createdObj = processoService.cadastrarProcesso(processo);
+        ProcessoDTOOutput out = modelMapper.map(createdObj, ProcessoDTOOutput.class);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdObj);
+        return ResponseEntity.status(HttpStatus.CREATED).body(out);
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
