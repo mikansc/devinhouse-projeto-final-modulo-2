@@ -57,25 +57,22 @@ public class ProcessoService {
                 .orElseThrow(() -> new ObjectNotFoundException("Nenhum processo encontrado com a chave de processo informada"));
     }
 
-    public ProcessoDTOOutput cadastrarProcesso(ProcessoDTOInput createdProcessoDTO) {
+    public Processo cadastrarProcesso(Processo createdProcesso) {
 
-        Assunto assunto = assuntoService.buscarAssunto(createdProcessoDTO.getCdAssunto());
+        Assunto assunto = assuntoService.buscarAssunto(createdProcesso.getCdAssunto());
         if (assunto.getFlAtivo() == Ativo.NAO.value()) {
             throw new InactiveObjectException("Assunto inativo, não é possivel cadastrar o Processo!");
         }
 
-        Interessado interessado = interessadoService.buscarPorId(createdProcessoDTO.getCdInteressado());
+        Interessado interessado = interessadoService.buscarPorId(createdProcesso.getCdInteressado());
         if (interessado.getFlAtivo() == Ativo.NAO.value()) {
             throw new InactiveObjectException("Interessado inativo, não é possivel cadastrar o Processo!");
         }
 
-        Processo createdProcesso = modelMapper.map(createdProcessoDTO, Processo.class);
         createdProcesso.setAssunto(assunto);
         createdProcesso.setInteressado(interessado);
 
-        Processo processoToSave = processoRepository.save(createdProcesso);
-
-        return modelMapper.map(processoToSave, ProcessoDTOOutput.class);
+        return processoRepository.save(createdProcesso);
     }
 
     public void atualizarPorId(Integer id, ProcessoDTOInput processoAtualizadoDTO) {
