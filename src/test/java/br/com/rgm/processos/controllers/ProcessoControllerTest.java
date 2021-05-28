@@ -11,7 +11,6 @@ import br.com.rgm.processos.utils.Ativo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,7 +25,6 @@ import java.util.Date;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,7 +72,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").isNotEmpty())
                 .andExpect(jsonPath("$.[1].id").isNotEmpty());
@@ -98,7 +95,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").isNotEmpty())
                 .andExpect(jsonPath("$.[0].assunto.id").value(processo.getAssunto().getId()))
@@ -124,7 +120,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").isNotEmpty())
                 .andExpect(jsonPath("$.[0].interessado.id").value(processo.getInteressado().getId()))
@@ -150,7 +145,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -175,7 +169,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -197,7 +190,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").isNotEmpty());
     }
@@ -218,7 +210,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -243,7 +234,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").isNotEmpty());
     }
@@ -266,7 +256,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -307,7 +296,6 @@ class ProcessoControllerTest {
         ResultActions perform = mvc.perform(request);
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
@@ -330,7 +318,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isBadRequest())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("400"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("message").value("Um ou mais campos possuem um erro"))
@@ -364,7 +351,6 @@ class ProcessoControllerTest {
         // then
         perform
                 .andExpect(status().isBadRequest())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("400"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())

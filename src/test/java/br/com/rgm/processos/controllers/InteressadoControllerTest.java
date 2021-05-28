@@ -25,7 +25,6 @@ import java.util.Date;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,7 +74,6 @@ class InteressadoControllerTest {
         // then
 
         perform
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").isNotEmpty())
                 .andExpect(jsonPath("$.[0].nmInteressado").value(interessado1.getNmInteressado()))
@@ -126,7 +124,6 @@ class InteressadoControllerTest {
         //then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -175,7 +172,6 @@ class InteressadoControllerTest {
         //then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -217,8 +213,8 @@ class InteressadoControllerTest {
     @DisplayName("Ao tentar cadastrar um interessado repetido deve retornar um JSON de erro e o status 403 - Forbidden")
     void deveRetornarUmaExcecaoAoTentarCadastrarUmInteressadoQueJaEstaNoBanco() throws Exception {
         // given
-    	DataIntegrityViolationException exception = new DataIntegrityViolationException("0");
-    	InteressadoDTO dto = new InteressadoDTO();
+        DataIntegrityViolationException exception = new DataIntegrityViolationException("0");
+        InteressadoDTO dto = new InteressadoDTO();
         dto.setNmInteressado(NOME);
         dto.setNuIdentificacao(CPF);
         dto.setDtNascimento(NASCIMENTO);
@@ -237,13 +233,12 @@ class InteressadoControllerTest {
         // then
         perform
                 .andExpect(status().isForbidden())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("403"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
                 .andExpect(jsonPath("message").value("Operação não permitida. Contacte o administrador do sistema."));
     }
-    
+
     @Test
     @DisplayName("Deve retornar Status 204 - No Content")
     void atualizarInteressado() throws Exception {
