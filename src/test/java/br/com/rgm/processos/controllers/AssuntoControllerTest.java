@@ -24,7 +24,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -115,7 +114,6 @@ class AssuntoControllerTest {
         //then
         perform
                 .andExpect(status().isNotFound())
-                .andDo(print())
                 .andExpect(jsonPath("statusCode").value("404"))
                 .andExpect(jsonPath("timestamp").isNotEmpty())
                 .andExpect(jsonPath("fields").doesNotExist())
@@ -149,7 +147,6 @@ class AssuntoControllerTest {
 
         // then
         perform
-                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("dtCadastro").isNotEmpty())
